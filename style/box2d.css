@@ -1,0 +1,82 @@
+/* Colors
+---Dark ---
+Blue1 - 04346C
+Blue2 - 274E7D
+Blue3 - 0E53A7
+Blue4 - 4284D3
+Blue5 - 6899D3
+Blue6 - 8EB3DE
+Blue7 - BED0E6
+---Light---
+
+---Dark ---
+Orange1 - A66500
+Orange2 - BF8830
+Orange3 - FF9C00
+Orange4 - FFB540
+Orange5 - FFC973
+---Light---
+*/
+
+
+#canvas {
+	padding:0; 
+	margin:0; 
+	border:1px solid #BF8830;
+	position:absolute; 
+	background-color:#FFFFFF;
+}
+#CONTAINER { 
+	margin-left: 30px; 
+}
+#HEADER h1 { 
+	margin-top: 95px; 
+	padding-right: 30px;
+	text-align: center;
+	font-size: xx-large; 
+	font-style: italic; 
+	font-weight: bold; 
+	color: #ccccff; 
+}
+#HEADER h1 b { 
+	color: #ffffff; 
+	font-size: 110%; 
+}
+#spacer {
+	height: 300px;
+}
+span.key {
+	text-decoration: underline;
+}
+#BODYBOX {
+	background-image: url(images/bodybox_bg.png);
+	background-repeat: repeat-y;
+}
+p {
+	padding-left: 20px;
+}
+.contact {
+	border: 1px solid white;
+	padding: 5px;
+	margin: 5px;
+	margin-left: 30px;
+	width: 350px;
+}
+a{
+	color: yellow;
+}
+a:hover {
+	color: yellow;
+	background-color: black;
+}
+a:visited {
+	color: yellow;
+}
+a:active {
+	color: yellow;
+}
+pre.prettyprint {
+	margin-left: 30px;
+	padding: 5px;
+	background-color: #bbbbff;
+}

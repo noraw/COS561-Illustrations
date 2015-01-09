@@ -1,3 +1,22 @@
+/* Colors
+---Dark ---
+Blue1 - 04346C
+Blue2 - 274E7D
+Blue3 - 0E53A7
+Blue4 - 4284D3
+Blue5 - 6899D3
+Blue6 - 8EB3DE
+Blue7 - BED0E6
+---Light---
+
+---Dark ---
+Orange1 - A66500
+Orange2 - BF8830
+Orange3 - FF9C00
+Orange4 - FFB540
+Orange5 - FFC973
+---Light---
+*/
 
 html, body  {
 	font: 100% Verdana, Arial, Helvetica, sans-serif;
@@ -20,7 +39,7 @@ h5 {
 #container { 
 	width: 100%;  /* this width will create a container that will fit in an 800px browser window if text is left at browser default font sizes */
 	height: 100%;
-	background: #FFFFFF;
+	background: #FFB540;
 	text-align: left; /* this overrides the text-align: center on the body element. */
 } 
 
@@ -30,8 +49,11 @@ h5 {
 }
 
 #header { 
-	background: #DDDDDD; 
+	background: #4284D3; 
 	padding: 0 10px;  /* this padding matches the left alignment of the elements in the divs that appear beneath it. If an image is used in the #header instead of text, you may want to remove the padding. */
+	border-bottom-width: thick;
+	border-bottom-style: solid;
+	border-bottom-color: #0E53A7;
 } 
 #header h3 {
 	margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
@@ -48,10 +70,10 @@ h5 {
 	float: left; 
 	position: absolute;
 	width: 160px; /* the actual width of this div, in standards-compliant browsers, or standards mode in Internet Explorer will include the padding and border in addition to the width */
-	background: #EBEBEB; /* the background color will be displayed for the length of the content in the column, but no further */
+	background: #4284D3; /* the background color will be displayed for the length of the content in the column, but no further */
 	border-right-width: thick;
 	border-right-style: solid;
-	border-right-color: #333333;
+	border-right-color: #0E53A7;
 	height: 100%;
 }
 
@@ -60,10 +82,10 @@ h5 {
 	top: 0;
 	right: 0;
 	width: 160px; /* the actual width of this div, in standards-compliant browsers, or standards mode in Internet Explorer will include the padding and border in addition to the width */
-	background: #EBEBEB; /* the background color will be displayed for the length of the content in the column, but no further */
+	background: #4284D3; /* the background color will be displayed for the length of the content in the column, but no further */
 	border-left-width: thick;
 	border-left-style: solid;
-	border-left-color: #333333;
+	border-left-color: #0E53A7;
 	height: 100%;
 }
 
@@ -103,4 +125,33 @@ h5 {
 
 .button {
 	margin: 3px 0px;
+  background: #8EB3DE;
+  border: 2px solid #0E53A7;
+  border-radius: 20px;
+}
+
+.button:active {
+  background: #BED0E6;
+  border: 2px solid #0E53A7;
+}
+
+.fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin: 3px;
+}
+
+.fileUplaod.importText {
+  margin: 10px;
+}
+.fileUpload input.import {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
 }
