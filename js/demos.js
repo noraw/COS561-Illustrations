@@ -34,33 +34,29 @@ function step(cnt) {
 	setTimeout('step(' + (cnt || 0) + ')', 10);
 }
 
-function GetShapeAtMouse(includeStatic) {
-    var mouse_p = new b2Vec2(mouse_x, mouse_y);
-     
+function GetShapeAtMouse() {
     var aabb = new b2AABB();
     aabb.minVertex.Set(mouse_x - 0.001, mouse_y - 0.001);
     aabb.maxVertex.Set(mouse_x + 0.001, mouse_y + 0.001);
      
-    var body = null;
-     
-    // Query the world for overlapping shapes.
-    function GetBodyCallback(fixture) {
-        var shape = fixture.GetShape();
-         
-        if (fixture.GetBody().GetType() != b2Body.b2_staticBody || includeStatic) {
-            var inside = shape.TestPoint(fixture.GetBody().GetTransform(), mouse_p);
-             
-            if (inside) {
-                body = fixture.GetBody();
-                return false;
-            }
-        }
-         
-        return true;
-    }
     var shapes = new Array();
     world.Query(aabb, shapes, 1);
     return shapes[0];
+}
+
+function UpdateJointPosition(body) {
+	for (var j = world.m_jointList; j; j = j.m_next) {
+    var b1 = j.GetBody1();
+    var b2 = j.GetBody2();
+    if(b1 == body) {
+      j.m_localAnchor2.x = body.m_position.x;
+      j.m_localAnchor2.y = body.m_position.y;
+    } else if(b2 == body) {
+      j.m_localAnchor1.x = body.m_position.x;
+      j.m_localAnchor1.y = body.m_position.y;
+    }
+	}
+
 }
 
 Event.observe(window, 'load', function() {
@@ -91,37 +87,26 @@ Event.observe(window, 'load', function() {
     mouse_y = p.y;
      
     if(mouse_pressed && mouse_shape) {
-      console.log("move: " + p.x + ", " + p.y);
       mouse_shape.m_position = p;
+      var shape = mouse_shape;
       var body = mouse_shape.GetBody();
-      body.SetCenterPosition(p, 0);
+      var rotation = body.GetRotation();
+      body.SetCenterPosition(p, rotation);
+      body.SetOriginPosition(p, rotation);
+      UpdateJointPosition(body);
     }
-/*
-        //if joint exists then create
-        var def = new b2MouseJointDef();
-         
-        def.body1 = world.GetGroundBody();;
-        def.body2 = body;
-        def.target = p;
-         
-        def.collideConnected = true;
-        def.maxForce = 1000;// * body.GetMass();
-        def.dampingRatio = 0;
-         
-        mouse_joint = world.CreateJoint(def);
-         
-        body.WakeUp();
-      }
-*/
-    /*
-    if(mouse_joint) {
-        mouse_joint.SetTarget(p);
-    }*/
   });
    
 	Event.observe('canvas', 'mousedown', function(e) {
     console.log("down");
     //flag to indicate if mouse is pressed or not
+    if (state) {
+		  if (Math.random() < 0.5) 
+			  demos.top.createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
+		  else 
+			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
+    }
+
     mouse_pressed = true;
     var shape = GetShapeAtMouse();
     if(shape) {
@@ -129,9 +114,7 @@ Event.observe(window, 'load', function() {
     }
   });
    
-  /*
-      When mouse button is release, mark pressed as false and delete the mouse joint if it exists
-  */
+  //When mouse button is release, mark pressed as false and delete the mouse joint if it exists
 	Event.observe('canvas', 'mouseup', function(e) {
     console.log("up");
     mouse_pressed = false;
@@ -140,14 +123,16 @@ Event.observe(window, 'load', function() {
     }
   });
 
-  /* Right click to change worlds
+  // Right click to change worlds
 	Event.observe('canvas', 'contextmenu', function(e) {
+    console.log("click");
+    /*
     console.log("next");
 		if (e.preventDefault) e.preventDefault();
 		setupPrevWorld();
 		return false;
+    */
 	});
-  */
 	step();
 });
 
