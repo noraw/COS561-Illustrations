@@ -10,6 +10,10 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
     document.getElementById("sidebar1Div").className += " notSelected";
     document.getElementById("sidebar2Div").className += " notSelected";
     document.getElementById('editObjects').className = 'notSelected';
+    document.getElementById("frictionObject").textContent = "";
+    document.getElementById("frictionSlider").value = 0;
+    document.getElementById("restitutionObject").textContent = "";
+    document.getElementById("restitutionSlider").value = 0;
   } else {
     document.getElementById("sidebar1Div").className = 
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)notSelected(?!\S)/g , '' );
@@ -35,29 +39,20 @@ document.getElementById( 'moveSelectSwitch' ).addEventListener('click', function
   }
 });
 
-function fixObject() {
-  var value = document.getElementById('fixObject').value;
-  var body = selected_shape.GetBody();
-  if(value == 'Fix') {
-    body.m_flags = 17;
-    body.m_mass = 0;
-    body.m_invMass = 0;
-    body.mI = 0;
-    body.invI = 0;
-    selected_shape.m_friction = 0.2;
-    selected_shape.m_resitution = 0;
-    document.getElementById('fixObject').value = 'UnFix';
-  } else {
-    body.m_flags = 20;
-    body.m_mass = 0;
-    body.m_invMass = 0;
-    document.getElementById('fixObject').value = 'Fix';
-  }
-  var stat = body.IsStatic();
-  var i = 1;
+function deleteObject() {
+	for (var b = world.m_bodyList; b; b = b.m_next) {
+		for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
+			if(s == selected_shape) {
+        world.DestroyBody(b);
+        selected_shape = false;
+        return;
+      }
+		}
+	}
 }
 
 function loadPolygon() {
+  var fixed = document.getElementById("fixed").checked;
   var oFiles = document.getElementById("loadPolygon").files,
       nFiles = oFiles.length,
       file,
@@ -78,7 +73,7 @@ function loadPolygon() {
             if(line != "")
               pointsArray.push(JSON.parse(line));
           }
-          createPoly(world, 30, 30, pointsArray, true);
+          createPoly(world, 30, 30, pointsArray, fixed);
         }
       } else { 
         alert("Failed to load file");
@@ -97,3 +92,35 @@ function addRectangle() {
   var h = parseInt(document.getElementById("rectHeight").value);
   createBox(world, 30, 30, w, h, true);
 }
+
+function updateFriction(currFriction) {
+  selected_shape.m_friction = currFriction;
+  document.getElementById("frictionObject").textContent = selected_shape.m_friction;
+  document.getElementById("frictionSlider").value = selected_shape.m_friction;
+}
+
+function updateRestitution(currRestitution) {
+  selected_shape.m_restitution = currRestitution;
+  document.getElementById("restitutionObject").textContent = selected_shape.m_restitution;
+  document.getElementById("restitutionSlider").value = selected_shape.m_restitution;
+
+}
+
+function changeGravity() {
+  var x = parseInt(document.getElementById("gravityX").value);
+  var y = parseInt(document.getElementById("gravityY").value);
+  world.m_gravity = new b2Vec2(x, y);
+}
+
+function updateTimeStep(currTimeStepMilli) {
+  time_step_ms = currTimeStepMilli;
+  document.getElementById("timeStep").textContent = time_step_ms;
+  document.getElementById("timeStepSlider").value = time_step_ms;
+}
+
+
+
+
+
+
+

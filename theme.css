@@ -276,4 +276,7 @@ fieldset {
   visibility: hidden;
 }
 
+input[type=range]{
+    width: 100px;
+}
 

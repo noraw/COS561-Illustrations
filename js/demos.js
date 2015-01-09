@@ -10,12 +10,14 @@ var moveObjects = true; // lets you move objects, when false you can edit object
 var time_last_run;
 var mouse_pressed = false;
 var mouse_shape = false;
+var mouse_old_position = null;
 var mouse_x, mouse_y;
 var selected_shape = false;
 
 var density = 1.0;
 var restitution = 0.8;
 var friction = 0.3;
+var time_step_ms = 1.0;
 
 
 function setupWorld(did) {
@@ -32,7 +34,7 @@ function setupPrevWorld() { setupWorld(-1); }
 function step(cnt) {
   if(state){
 	  var stepping = false;
-	  var timeStep = 1.0/60;
+	  var timeStep = time_step_ms/60;
 	  var iteration = 1;
 	  world.Step(timeStep, iteration);
   }
@@ -74,6 +76,10 @@ Event.observe(window, 'load', function() {
 	canvasHeight = parseInt(canvasElm.height);
 	canvasTop = parseInt(canvasElm.style.top);
 	canvasLeft = parseInt(canvasElm.style.left);
+  document.getElementById("gravityX").value = world.m_gravity.x;
+  document.getElementById("gravityY").value = world.m_gravity.y;
+  document.getElementById("timeStep").textContent = time_step_ms;
+  document.getElementById("timeStepSlider").value = time_step_ms;
   /*
 	Event.observe('canvas', 'click', function(e) {
     console.log("click");
@@ -94,13 +100,21 @@ Event.observe(window, 'load', function() {
     mouse_y = p.y;
      
     if(mouse_pressed && mouse_shape) {
-      mouse_shape.m_position = p;
+      var offset = new b2Vec2(p.x, p.y);
+      offset.Subtract(mouse_old_position);
+
+      mouse_shape.m_position.Add(offset);
       var shape = mouse_shape;
       var body = mouse_shape.GetBody();
       var rotation = body.GetRotation();
-      body.SetCenterPosition(p, rotation);
-      body.SetOriginPosition(p, rotation);
+      var center = body.GetCenterPosition();
+      var origin = body.GetOriginPosition();
+      center.Add(offset);
+      origin.Add(offset);
+      body.SetCenterPosition(center, rotation);
+      body.SetOriginPosition(origin, rotation);
       UpdateJointPosition(body);
+      mouse_old_position = p;
     }
   });
    
@@ -118,17 +132,17 @@ Event.observe(window, 'load', function() {
         var shape = GetShapeAtMouse();
         if(shape) {
           mouse_shape = shape;
+          mouse_old_position = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
         }
       } else {
         var shape = GetShapeAtMouse();
         if(shape) {
           var body = shape.GetBody();
           selected_shape = shape;
-          if(body.IsStatic()) {
-            document.getElementById('fixObject').value = 'UnFix';
-          } else {
-            document.getElementById('fixObject').value = 'Fix';
-          }
+          document.getElementById("frictionObject").textContent = shape.m_friction;
+          document.getElementById("frictionSlider").value = shape.m_friction;
+          document.getElementById("restitutionObject").textContent = shape.m_restitution;
+          document.getElementById("restitutionSlider").value = shape.m_restitution;
         } else {
           selected_shape = false;
         }
