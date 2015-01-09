@@ -80,6 +80,10 @@ function drawShape(shape, isStatic, context) {
     strokeColor = '#04346C';
   }
 
+  if(shape == selected_shape) {
+    fillColor = '#F55423';
+  }
+
 	context.fillStyle = fillColor;
 	context.strokeStyle = strokeColor;
 	context.beginPath();

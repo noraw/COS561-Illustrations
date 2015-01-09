@@ -11,7 +11,12 @@ var time_last_run;
 var mouse_pressed = false;
 var mouse_shape = false;
 var mouse_x, mouse_y;
-var selectedObject = false;
+var selected_shape = false;
+
+var density = 1.0;
+var restitution = 0.8;
+var friction = 0.3;
+
 
 function setupWorld(did) {
 	if (!did) did = 0;
@@ -107,12 +112,27 @@ Event.observe(window, 'load', function() {
 			  createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, false);
 		  else 
 			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
-    }
-
-    mouse_pressed = true;
-    var shape = GetShapeAtMouse();
-    if(shape) {
-      mouse_shape = shape;
+    } else {
+      if(moveObjects) {
+        mouse_pressed = true;
+        var shape = GetShapeAtMouse();
+        if(shape) {
+          mouse_shape = shape;
+        }
+      } else {
+        var shape = GetShapeAtMouse();
+        if(shape) {
+          var body = shape.GetBody();
+          selected_shape = shape;
+          if(body.IsStatic()) {
+            document.getElementById('fixObject').value = 'UnFix';
+          } else {
+            document.getElementById('fixObject').value = 'Fix';
+          }
+        } else {
+          selected_shape = false;
+        }
+      }
     }
   });
    

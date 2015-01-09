@@ -6,8 +6,8 @@ function createWorld() {
 	var doSleep = true;
 	var world = new b2World(worldAABB, gravity, doSleep);
 	createGround(world);
-	createBox(world, 0, 125, 10, 300);
-	createBox(world, 650, 125, 10, 300);
+	createBox(world, 0, 125, 10, 300, true);
+	createBox(world, 650, 125, 10, 300, true);
 	return world;
 }
 
