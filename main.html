@@ -87,12 +87,45 @@
 
 <body>
 <div id="container">
-  <div id="sidebar1"><div class="insideSidebar">
+  <div id="sidebar1"><div id="sidebar1Div" class="insideSidebar selected">
     <h5>Tools</h5><hr />
     <div class="button fileUpload">
         <span class="importText">.  Import Polygon</span>
-        <input type="file" class="import" id="loadPolygon" onChange="loadPolygon();"/>
+        <input type="file" class="import" id="loadPolygon" onClick="loadPolygon();"/>
     </div>
+    <fieldset>
+      <legend>Rectangle</legend>
+      <div>
+        <label class="textLabel">Height:</label>
+        <input type="text" id="rectHeight" class="textInput"></input>
+      </div>
+      <div>
+        <label class="textLabel">Width:</label>
+        <input type="text" id="rectWidth" class="textInput"></input>
+      </div>
+      <input type="button" class="button" style="float:right;" id="addRectangle" onClick="addRectangle();" value="Add"/>
+    </fieldset>
+    <fieldset>
+      <legend>Circle</legend>
+      <div>
+        <label class="textLabel">Radius:</label>
+        <input type="text" id="radius" class="textInput"></input>
+      </div>
+      <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
+    </fieldset>
+    <div class="moveSelectSwitch">
+        <input type="checkbox" name="moveSelectSwitch" class="moveSelectSwitch-checkbox" id="moveSelectSwitch" checked>
+        <label class="moveSelectSwitch-label" for="moveSelectSwitch">
+            <span class="moveSelectSwitch-inner"></span>
+            <span class="moveSelectSwitch-switch"></span>
+        </label>
+    </div>
+    <fieldset id="editObjects" class="notSelected">
+      <legend>Edit Objects</legend>
+      <input type="button" class="button" id="fixObject" onClick="fixObject();" value="Fix"/>
+      <input type="button" class="button" id="deleteObject" onClick="deleteObject();" value="Delete"/>
+    </fieldset>
+
   <!-- end #sidebar1 --></div></div>
   
   <div id="middle">
@@ -100,12 +133,18 @@
       <h3>Dynamic Illustrations with Physical Simulations</h3>
     <!-- end #header --></div>
   	<div id="mainContent">
-   		<button class="button" id="startStop">Start</button><br />
+      <div class="editPlaySwitch">
+          <input type="checkbox" name="editPlaySwitch" class="editPlaySwitch-checkbox" id="editPlaySwitch" checked>
+          <label class="editPlaySwitch-label" for="editPlaySwitch">
+              <span class="editPlaySwitch-inner"></span>
+              <span class="editPlaySwitch-switch"></span>
+          </label>
+      </div>
       <canvas id="canvas" width='650' height='400' style="top:100px; left:180px;""></canvas>
     <!-- end #mainContent --></div>
   <!-- end #middle --></div>
   
-  <div id="sidebar2"><div class="insideSidebar">
+  <div id="sidebar2"><div id="sidebar2Div" class="insideSidebar selected">
     <h5>Tools</h5><hr/>
     <input type="button" class="button" name="saveButton" id="saveButton" value="Save Illustration" onClick="saveIllustration();"/>
     <input type="button" class="button" name="loadButton" id="loadButton" value="Load Illustration" onClick="loadIllustration();"/>

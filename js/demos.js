@@ -6,10 +6,12 @@ var canvasHeight;
 var canvasTop;
 var canvasLeft;
 var state = false; // `true` when the simulation is running
+var moveObjects = true; // lets you move objects, when false you can edit objects
 var time_last_run;
 var mouse_pressed = false;
 var mouse_shape = false;
 var mouse_x, mouse_y;
+var selectedObject = false;
 
 function setupWorld(did) {
 	if (!did) did = 0;
@@ -102,7 +104,7 @@ Event.observe(window, 'load', function() {
     //flag to indicate if mouse is pressed or not
     if (state) {
 		  if (Math.random() < 0.5) 
-			  demos.top.createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
+			  createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, false);
 		  else 
 			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
     }
@@ -136,14 +138,3 @@ Event.observe(window, 'load', function() {
 	step();
 });
 
-document.getElementById( 'startStop' ).addEventListener('click', function() {
-        if ( this.innerHTML === 'Start' ) {
-            this.innerHTML = 'Stop';
-            time_last_run = (new Date()).getTime();
-            state = true;
-        } else {
-            this.innerHTML = 'Start';
-            state = false;
-        }
-    }
-)
