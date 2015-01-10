@@ -82,15 +82,17 @@ function loadPolygon() {
 }
 
 function addCircle() {
+  var fixed = document.getElementById("fixed").checked;
   var r = document.getElementById("radius").value;
   r = parseInt(r);
-  createBall(world, 30, 30, r, true);
+  createBall(world, 30, 30, r, fixed);
 }
 
 function addRectangle() {
+  var fixed = document.getElementById("fixed").checked;
   var w = parseInt(document.getElementById("rectWidth").value);
   var h = parseInt(document.getElementById("rectHeight").value);
-  createBox(world, 30, 30, w, h, true);
+  createBox(world, 30, 30, w, h, fixed);
 }
 
 function updateFriction(currFriction) {

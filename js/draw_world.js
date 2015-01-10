@@ -53,7 +53,7 @@ function drawCircleOutline(pos, r, fillColor, strokeColor, context) {
 	context.strokeStyle = strokeColor;
 	context.fillStyle = fillColor;
 	context.beginPath();
-	var segments = 16.0;
+	var segments = 2*r;
 	var theta = 0.0;
 	var dtheta = 2.0 * Math.PI / segments;
 	// draw circle
