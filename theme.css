@@ -305,11 +305,11 @@ fieldset {
 }
 
 .selected {
-  visibility: visible;
+  display: block;
 }
 
 .notSelected {
-  visibility: hidden;
+  display: none;
 }
 
 input[type=range]{

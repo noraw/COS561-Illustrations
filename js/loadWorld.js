@@ -14,9 +14,26 @@ function loadWorld(json) {
     loadJoint(jsonjoint);
   }
 
+  var list = JSON.parse(json['emitterList'])
+  for( var i = 0; i < list.length; i++){
+    var jsonemitter = JSON.parse(list[i]);
+    loadEmitter(jsonemitter);
+  }
+
   return true;
 }
 
+
+function loadEmitter(jsonemitter) {
+  var velocity = new b2Vec2(jsonemitter.velocity.x, jsonemitter.velocity.y);
+  var body = getBodyFromId(jsonemitter.body_id);
+  var w = parseInt(jsonemitter.w);
+  var h = parseInt(jsonemitter.h);
+  var r = parseInt(jsonemitter.radius);
+  var emitter = new Emitter(body, velocity, r, w, h);
+  emitters.push(emitter);
+  emitterBodies[body.m_userData.id] = true;
+}
 
 
 function loadJoint(jsonjoint) {

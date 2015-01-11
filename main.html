@@ -260,6 +260,21 @@
         </label>
     </div>
     <fieldset id="editObjects" class="notSelected">
+      <legend>Edit Object</legend>
+      <div>
+        <label >Friction: </label>
+        <label id="frictionObject"> </label>
+        <input type="range" id="frictionSlider" min="0" max="1" value="0" step=".1" onchange="updateFriction(this.value)" />
+      </div>
+      <div>
+        <label >Elasticity: </label>
+        <label id="restitutionObject"> </label>
+        <input type="range" id="restitutionSlider" min="0" max="1" value="0" step=".1" onchange="updateRestitution(this.value)" />
+      </div>
+      <input type="button" class="button" id="deleteObject" onClick="deleteObject();" value="Delete"/>
+    </fieldset>
+
+    <fieldset id="editEmitter" class="notSelected">
       <legend>Edit Objects</legend>
       <div>
         <label >Friction: </label>
