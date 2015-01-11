@@ -27,7 +27,8 @@ var select_anchor1 = 3;
 var select_anchor2 = 4;
 
 var select_type = select_any;
-
+var emitters = new Array();
+var emitterBodies = {};
 
 function setupWorld(did) {
 	if (!did) did = 0;
@@ -46,6 +47,10 @@ function step(cnt) {
 	  var timeStep = time_step_ms/60;
 	  var iteration = 1;
 	  world.Step(timeStep, iteration);
+    //emitter stuff
+    for(var i=0; i < emitters.length; i++) {
+      emitters[i].createBall();
+    }
   }
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   drawWorld(world, ctx);
@@ -100,6 +105,9 @@ Event.observe(window, 'load', function() {
       this.nextElementSibling.toggle();
   });
   Event.observe('legend3', 'click', function(e) {
+      this.nextElementSibling.toggle();
+  });
+  Event.observe('legend4', 'click', function(e) {
       this.nextElementSibling.toggle();
   });
 

@@ -10,8 +10,8 @@ function createWorld() {
   ground.m_userData = {'id': numBodies};
   numBodies++;
 	createGround(world);
-	createBox(world, 0, 125, 10, 300, true);
-	createBox(world, 650, 125, 10, 300, true);
+	createBox(world, 0, 300, 20, 600, true);
+	createBox(world, 650, 300, 20, 600, true);
 	return world;
 }
 

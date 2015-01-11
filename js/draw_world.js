@@ -1,8 +1,26 @@
 function drawWorld(world, context) {
+  var fillColor, strokeColor;
+  var strokeWidth = '2px';
+
 	for (var b = world.m_bodyList; b; b = b.m_next) {
     var isStatic = b.IsStatic();
+    if(b.m_userData.id in emitterBodies) {
+      fillColor = '#A66500';
+      strokeColor = '#04346C';
+      strokeWidth = '5px';
+    } else if (isStatic) {
+      fillColor = '#FF9C00';
+      strokeColor = '#A66500';
+    } else {
+      fillColor = '#6899D3';
+      strokeColor = '#04346C';
+    }
+
 		for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
-			drawShape(s, isStatic, context);
+      if(s == selected_shape) {
+        fillColor = '#F55423';
+      }
+			drawShape(s, fillColor, strokeColor, strokeWidth, context);
 		}
 	}
 	for (var j = world.m_jointList; j; j = j.m_next) {
@@ -16,8 +34,12 @@ function drawJoint(joint, context) {
 	var x2 = b2.m_position;
 	var p1 = joint.GetAnchor1();
 	var p2 = joint.GetAnchor2();
-	context.strokeStyle = '#00eeee';
-  drawCircleOutline(p1, 3, '#FFC973', '#FF9C00', context);
+
+	context.fillStyle = '#FFC973';
+	context.strokeStyle = '#FF9C00';
+  context.lineWdith = '2px';
+
+  drawCircleOutline(p1, 3, context);
 	context.beginPath();
 	switch (joint.m_type) {
 	case b2Joint.e_distanceJoint:
@@ -49,9 +71,7 @@ function drawJoint(joint, context) {
 	context.stroke();
 }
 
-function drawCircleOutline(pos, r, fillColor, strokeColor, context) {
-	context.strokeStyle = strokeColor;
-	context.fillStyle = fillColor;
+function drawCircleOutline(pos, r, context) {
 	context.beginPath();
 	var segments = 2*r;
 	var theta = 0.0;
@@ -65,27 +85,15 @@ function drawCircleOutline(pos, r, fillColor, strokeColor, context) {
 		theta += dtheta;
 	}
 	context.lineTo(pos.x + r, pos.y);
-
 	context.stroke();
   context.fill();
 }
 
-function drawShape(shape, isStatic, context) {
-  var fillColor, strokeColor;
-  if (isStatic) {
-    fillColor = '#FF9C00';
-    strokeColor = '#A66500';
-  } else {
-    fillColor = '#6899D3';
-    strokeColor = '#04346C';
-  }
-
-  if(shape == selected_shape) {
-    fillColor = '#F55423';
-  }
+function drawShape(shape, fillColor, strokeColor, strokeWidth, context) {
 
 	context.fillStyle = fillColor;
 	context.strokeStyle = strokeColor;
+  context.lineWdith = strokeWidth;
 	context.beginPath();
 	switch (shape.m_type) {
 	case b2Shape.e_circleShape:
@@ -93,7 +101,7 @@ function drawShape(shape, isStatic, context) {
 			var circle = shape;
 			var pos = circle.m_position;
 			var r = circle.m_radius;
-	    drawCircleOutline(pos, r, fillColor, strokeColor, context);
+	    drawCircleOutline(pos, r, context);
 /*
 			// draw radius
 			context.moveTo(pos.x, pos.y);

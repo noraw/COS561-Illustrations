@@ -65,7 +65,7 @@ function createBox(world, x, y, width, height, fixed) {
 	  boxSd.restitution = restitution;
 	  boxSd.friction = friction;
   }
-	boxSd.extents.Set(width, height);
+	boxSd.extents.Set(width/2, height/2);
 	var boxBd = new b2BodyDef();
 	boxBd.AddShape(boxSd);
 	boxBd.position.Set(x,y);

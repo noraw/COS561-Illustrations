@@ -99,6 +99,22 @@ function addRectangle() {
   createBox(world, 30, 30, w, h, fixed);
 }
 
+function addEmitter() {
+  var w = parseInt(document.getElementById("emitterWidth").value);
+  var h = parseInt(document.getElementById("emitterHeight").value);
+  var r = parseInt(document.getElementById("emitterRadius").value);
+  var x = parseInt(document.getElementById("emitterX").value);
+  var y = parseInt(document.getElementById("emitterY").value);
+
+  var velocity = new b2Vec2(x, y);
+  var body = createBox(world, 30, 30, w, h, true);
+
+  var emitter = new Emitter(body, velocity, r, w, h);
+  emitters.push(emitter);
+  emitterBodies[body.m_userData.id] = true;
+}
+
+
 function updateFriction(currFriction) {
   selected_shape.m_friction = currFriction;
   document.getElementById("frictionObject").textContent = selected_shape.m_friction;

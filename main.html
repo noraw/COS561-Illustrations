@@ -147,7 +147,7 @@
 
         <div id="jointPrismatic" style="display: none;">
           <label class="buttonLabelLeft" >Axis</label>
-          <div>
+          <div style="display:inline-block">
             <label class="textLabel">X:</label>
             <input type="text" id="axisX" class="textInput"></input>
           </div>
@@ -160,6 +160,43 @@
         <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add joint"/>
       </div>
     </fieldset>
+    <fieldset>
+      <legend id="legend4">Emitter</legend>
+      <div class="fieldsetContent">
+
+       <label style="width: 120px; text-align: left; float: left; margin-bottom: 5px;">Emitter size:</label>
+       <div>
+          <label class="textLabel">Height:</label>
+          <input type="text" id="emitterHeight" class="textInput"></input>
+        </div>
+        <div>
+          <label class="textLabel">Width:</label>
+          <input type="text" id="emitterWidth" class="textInput"></input>
+        </div>
+
+        <label style="width: 120px; text-align: left; float: left; margin-bottom: 5px; margin-top: 5px;">Projectile size:</label>
+        <div>
+          <label class="textLabel">Radius:</label>
+          <input type="text" id="emitterRadius" class="textInput"></input>
+        </div>
+
+        <label class="buttonLabelLeft" >Emitter Velocity:</label>
+        <div style="display:inline-block">
+          <label class="textLabel">X:</label>
+          <input type="text" id="emitterX" class="textInput"></input>
+        </div>
+        <div>
+          <label class="textLabel">Y:</label>
+          <input type="text" id="emitterY" class="textInput"></input>
+        </div>
+
+        <input type="button" class="button" style="float:right;" id="addCircle" onClick="addEmitter();" value="Add emitter"/>
+      </div>
+    </fieldset>
+
+
+
+
   <!-- end #sidebar1 --></div></div>
   
   <div id="middle">
@@ -249,6 +286,7 @@
     <script src='js/main.js'></script>
     <script src='js/loadWorld.js'></script>
     <script src='js/saveWorld.js'></script>
+    <script src='js/emitter.js'></script>
 
     <script src='style/prettify.js'></script>
 		<link href="style/prettify.css" rel="stylesheet" type="text/css" />
