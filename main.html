@@ -95,49 +95,56 @@
         <input type="file" class="import" id="loadPolygon" onChange="loadPolygon();"/>
     </div>
     <fieldset>
-      <legend>Rectangle</legend>
-      <div>
-        <label class="textLabel">Height:</label>
-        <input type="text" id="rectHeight" class="textInput"></input>
+      <legend id="legend1">Rectangle</legend>
+      <div class="fieldsetContent">
+        <div>
+          <label class="textLabel">Height:</label>
+          <input type="text" id="rectHeight" class="textInput"></input>
+        </div>
+        <div>
+          <label class="textLabel">Width:</label>
+          <input type="text" id="rectWidth" class="textInput"></input>
+        </div>
+        <input type="button" class="button" style="float:right;" id="addRectangle" onClick="addRectangle();" value="Add"/>
       </div>
-      <div>
-        <label class="textLabel">Width:</label>
-        <input type="text" id="rectWidth" class="textInput"></input>
-      </div>
-      <input type="button" class="button" style="float:right;" id="addRectangle" onClick="addRectangle();" value="Add"/>
     </fieldset>
     <fieldset>
-      <legend>Circle</legend>
-      <div>
-        <label class="textLabel">Radius:</label>
-        <input type="text" id="radius" class="textInput"></input>
+      <legend id="legend2">Circle</legend>
+      <div class="fieldsetContent">
+        <div>
+          <label class="textLabel">Radius:</label>
+          <input type="text" id="radius" class="textInput"></input>
+        </div>
+        <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
       </div>
-      <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
     </fieldset>
 
     <fieldset>
-      <legend>Joints</legend>
-      <select id="jointType" >
-        <option value="revolute">Revolute</option>
-        <option value="prismatic">Prismatic</option>
-        <option value="distance">Distance</option>
-        <option value="pulley">Pulley</option>
-        <option value="gear">Gear</option>
-      </select>
-      <div id="jointParts">
-        <input type="button" class="button" style="float:left;" id="body1" onClick="selectBody1();" value="Select body1"/>
-        <label id="selectedBody1" class="buttonLabelRight" >NaN</label>
+      <legend id="legend3">Joints</legend>
+      <div class="fieldsetContent">
+        <p>You can only select blue objects.</p>
+        <select id="jointType" >
+          <option value="revolute">Revolute</option>
+          <option value="prismatic">Prismatic</option>
+          <option value="distance">Distance</option>
+          <option value="pulley">Pulley</option>
+          <option value="gear">Gear</option>
+        </select>
+        <div id="jointParts">
+          <input type="button" class="button" style="float:left;" id="body1" onClick="selectBody1();" value="Select body1"/>
+          <label id="selectedBody1" class="buttonLabelRight" >NaN</label>
 
-        <input type="button" class="button" style="float:left;" id="body2" onClick="selectBody2();" value="Select body2"/>
-        <label id="selectedBody2" class="buttonLabelRight">NaN</label>
+          <input type="button" class="button" style="float:left;" id="body2" onClick="selectBody2();" value="Select body2"/>
+          <label id="selectedBody2" class="buttonLabelRight">NaN</label>
 
-        <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click anchor1 point"/>
-        <label id="selectedAnchor1" class="buttonLabelLeft">NaN</label>
+          <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click anchor1 point"/>
+          <label id="selectedAnchor1" class="buttonLabelLeft">NaN</label>
 
-        <input type="button" class="button" style="float:left;" id="anchor2" onClick="selectAnchor2();" value="Click anchor2 point"/>
-        <label id="selectedAnchor2" class="buttonLabelLeft">NaN</label>
+          <input type="button" class="button" style="float:left;" id="anchor2" onClick="selectAnchor2();" value="Click anchor2 point"/>
+          <label id="selectedAnchor2" class="buttonLabelLeft">NaN</label>
+        </div>
+        <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add"/>
       </div>
-      <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add"/>
     </fieldset>
   <!-- end #sidebar1 --></div></div>
   
@@ -153,7 +160,12 @@
               <span class="editPlaySwitch-switch"></span>
           </label>
       </div>
-      <canvas id="canvas" width='650' height='400' style="top:100px; left:180px;""></canvas>
+      <label class="buttonLabelLeft">(0, 0)</label>
+      <label class="buttonLabelRight" style="width: 100px;">(650, 0)</label>
+      <canvas id="canvas" width='650' height='400' style="top:115px; left:180px;""></canvas>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <label class="buttonLabelLeft" >(0, 400)</label>
+      <label class="buttonLabelRight" style="width: 100px;">(650, 400)</label>
     <!-- end #mainContent --></div>
   <!-- end #middle --></div>
   
@@ -173,15 +185,15 @@
     </div>
     <fieldset>
       <legend>Gravity</legend>
-      <div>
-        <label class="textLabel">X:</label>
-        <input type="text" id="gravityX" class="textInput"></input>
-      </div>
-      <div>
-        <label class="textLabel">Y:</label>
-        <input type="text" id="gravityY" class="textInput"></input>
-      </div>
-      <input type="button" class="button" style="float:right;" id="changeGravity" onClick="changeGravity();" value="Update"/>
+        <div>
+          <label class="textLabel">X:</label>
+          <input type="text" id="gravityX" class="textInput"></input>
+        </div>
+        <div>
+          <label class="textLabel">Y:</label>
+          <input type="text" id="gravityY" class="textInput"></input>
+        </div>
+        <input type="button" class="button" style="float:right;" id="changeGravity" onClick="changeGravity();" value="Update"/>
     </fieldset>
     <div>
       <label >Timestep(ms): </label>

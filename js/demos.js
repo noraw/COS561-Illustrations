@@ -89,6 +89,19 @@ Event.observe(window, 'load', function() {
   document.getElementById("gravityY").value = world.m_gravity.y;
   document.getElementById("timeStep").textContent = time_step_ms;
   document.getElementById("timeStepSlider").value = time_step_ms;
+  var fieldsetContents = document.getElementsByClassName('fieldsetContent');
+  for(var i = 0; i < fieldsetContents.length; i++) {
+    fieldsetContents[i].hide();
+  }
+  Event.observe('legend1', 'click', function(e) {
+      this.nextElementSibling.toggle();
+  });
+  Event.observe('legend2', 'click', function(e) {
+      this.nextElementSibling.toggle();
+  });
+  Event.observe('legend3', 'click', function(e) {
+      this.nextElementSibling.toggle();
+  });
 
   //If mouse is moving over the thing
   Event.observe('canvas', 'mousemove', function(e) {
@@ -136,8 +149,11 @@ Event.observe(window, 'load', function() {
         if(select_type == select_body1 || select_type == select_body2) {
           var body = world.GetGroundBody();
           if(shape) {
-            selected_shape = shape;
-            saveSelectedBody(shape.GetBody());
+            body = shape.GetBody();
+            if(!body.IsStatic()) {
+              selected_shape = shape;
+              saveSelectedBody(body);
+            }
           } else {
             saveSelectedBody(body);
           }
@@ -145,6 +161,7 @@ Event.observe(window, 'load', function() {
         } else if (select_type == select_anchor1 || select_type == select_anchor2) {
           var point = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
           saveSelectedPoint(point);
+          return;
         }
         if(shape) {
           selected_shape = shape;

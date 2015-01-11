@@ -240,5 +240,46 @@ function saveSelectedPoint(point) {
   select_type = select_any;
 }
 
+function addJoint() {
+  var jointDef = new b2RevoluteJointDef();
+
+  var b1 = parseInt(document.getElementById("selectedBody1").textContent);
+  var b2 = parseInt(document.getElementById("selectedBody2").textContent);
+  var body1 = getBodyFromId(b1);
+  var body2 = getBodyFromId(b2);
+
+  if(body1 != null)
+    jointDef.body1 = body1;
+  if(body2 != null)
+    jointDef.body2 = body2;
+
+  var a1 = document.getElementById("selectedAnchor1").textContent.split(", ");
+  var x = parseInt(a1[0].split("(")[1]);
+  var y = parseInt(a1[1].split(")")[0]);
+
+  jointDef.anchorPoint = new b2Vec2(x, y);
+
+	joint = world.CreateJoint(jointDef);
+
+  document.getElementById("selectedBody1").textContent = "NaN";
+  document.getElementById("selectedBody2").textContent = "NaN";
+  document.getElementById("selectedAnchor1").textContent = "NaN";
+  document.getElementById("selectedAnchor2").textContent = "Nan";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
