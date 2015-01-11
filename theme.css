@@ -32,6 +32,10 @@ h5 {
  margin: 0px;
 }
 
+label {
+  font-size: 12px;
+}
+
 p {
   padding: 0px !important;
   margin-top: 0px !important;

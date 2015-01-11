@@ -198,6 +198,21 @@ function selectAnchor1() {
   selectAny();
 }
 
+function setAnchor1BodyCenter(bodyType) {
+  var body = null;
+  switch(bodyType) {
+    case 1: {
+      body = getBodyFromId(parseInt(document.getElementById("selectedBody1").textContent));
+    } break;
+    case 2: {
+      body = getBodyFromId(parseInt(document.getElementById("selectedBody2").textContent));
+    } break;
+  }
+  var point = body.GetCenterPosition();
+  var str = "("+point.x+", "+point.y+")";
+  document.getElementById("selectedAnchor1").textContent = str;
+}
+
 function selectAnchor2() {
   select_type = select_anchor2;
   document.getElementById("anchor2").className = "button-clicked";
@@ -241,21 +256,35 @@ function saveSelectedPoint(point) {
 }
 
 function addJoint() {
-  var jointDef = new b2RevoluteJointDef();
-
   var b1 = parseInt(document.getElementById("selectedBody1").textContent);
   var b2 = parseInt(document.getElementById("selectedBody2").textContent);
   var body1 = getBodyFromId(b1);
   var body2 = getBodyFromId(b2);
 
+  var a1 = document.getElementById("selectedAnchor1").textContent.split(", ");
+  var x = parseInt(a1[0].split("(")[1]);
+  var y = parseInt(a1[1].split(")")[0]);
+  var aX = parseInt(document.getElementById("axisX").value);
+  var aY = parseInt(document.getElementById("axisY").value);
+
+  var jointDef = null;
+  var val = document.getElementById("jointType").value;
+  switch(val) {
+    case "revolute": {
+      jointDef = new b2RevoluteJointDef();
+    } break;
+    case "prismatic": {
+	    jointDef = new b2PrismaticJointDef();
+    	jointDef.axis.Set(aX, aY);
+      document.getElementById("axisX").value = "";
+      document.getElementById("axisY").value = "";
+    } break;
+  }
+
   if(body1 != null)
     jointDef.body1 = body1;
   if(body2 != null)
     jointDef.body2 = body2;
-
-  var a1 = document.getElementById("selectedAnchor1").textContent.split(", ");
-  var x = parseInt(a1[0].split("(")[1]);
-  var y = parseInt(a1[1].split(")")[0]);
 
   jointDef.anchorPoint = new b2Vec2(x, y);
 
@@ -267,7 +296,17 @@ function addJoint() {
   document.getElementById("selectedAnchor2").textContent = "Nan";
 }
 
-
+function showJointOptions() {
+  var val = document.getElementById("jointType").value;
+  switch(val) {
+    case "revolute": {
+      document.getElementById("jointPrismatic").style.display = "none";
+    } break;
+    case "prismatic": {
+      document.getElementById("jointPrismatic").style.display = "block";
+    } break;
+  }
+}
 
 
 

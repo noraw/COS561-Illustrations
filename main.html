@@ -105,7 +105,7 @@
           <label class="textLabel">Width:</label>
           <input type="text" id="rectWidth" class="textInput"></input>
         </div>
-        <input type="button" class="button" style="float:right;" id="addRectangle" onClick="addRectangle();" value="Add"/>
+        <input type="button" class="button" style="float:right;" id="addRectangle" onClick="addRectangle();" value="Add rectangle"/>
       </div>
     </fieldset>
     <fieldset>
@@ -115,7 +115,7 @@
           <label class="textLabel">Radius:</label>
           <input type="text" id="radius" class="textInput"></input>
         </div>
-        <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
+        <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add circle"/>
       </div>
     </fieldset>
 
@@ -123,27 +123,41 @@
       <legend id="legend3">Joints</legend>
       <div class="fieldsetContent">
         <p>You can only select blue objects.</p>
-        <select id="jointType" >
+        <select id="jointType" onchange="showJointOptions();">
           <option value="revolute">Revolute</option>
           <option value="prismatic">Prismatic</option>
           <option value="distance">Distance</option>
           <option value="pulley">Pulley</option>
           <option value="gear">Gear</option>
         </select>
-        <div id="jointParts">
+
+        <div id="jointOptions" >
           <input type="button" class="button" style="float:left;" id="body1" onClick="selectBody1();" value="Select body1"/>
           <label id="selectedBody1" class="buttonLabelRight" >NaN</label>
 
           <input type="button" class="button" style="float:left;" id="body2" onClick="selectBody2();" value="Select body2"/>
-          <label id="selectedBody2" class="buttonLabelRight">NaN</label>
+          <label id="selectedBody2" class="buttonLabelRight" >NaN</label>
 
-          <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click anchor1 point"/>
-          <label id="selectedAnchor1" class="buttonLabelLeft">NaN</label>
-
-          <input type="button" class="button" style="float:left;" id="anchor2" onClick="selectAnchor2();" value="Click anchor2 point"/>
-          <label id="selectedAnchor2" class="buttonLabelLeft">NaN</label>
+          <label class="buttonLabelLeft" style="width: 60px;">Anchor1: </label>
+          <label id="selectedAnchor1" class="buttonLabelRight" style="width: 60px;">NaN</label>
+          <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click point"/>
+          <input type="button" class="button" style="float:left;" id="anchor1" onClick="setAnchor1BodyCenter(1);" value="Set as body1 center"/>
+          <input type="button" class="button" style="float:left;" id="anchor1" onClick="setAnchor1BodyCenter(2);" value="Set as body2 center"/>
         </div>
-        <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add"/>
+
+        <div id="jointPrismatic" style="display: none;">
+          <label class="buttonLabelLeft" >Axis</label>
+          <div>
+            <label class="textLabel">X:</label>
+            <input type="text" id="axisX" class="textInput"></input>
+          </div>
+          <div>
+            <label class="textLabel">Y:</label>
+            <input type="text" id="axisY" class="textInput"></input>
+          </div>
+        </div>
+
+        <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add joint"/>
       </div>
     </fieldset>
   <!-- end #sidebar1 --></div></div>
