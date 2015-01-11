@@ -20,6 +20,14 @@ var restitution = 0.8;
 var friction = 0.3;
 var time_step_ms = 1.0;
 
+var select_any = 0;
+var select_body1 = 1;
+var select_body2 = 2;
+var select_anchor1 = 3;
+var select_anchor2 = 4;
+
+var select_type = select_any;
+
 
 function setupWorld(did) {
 	if (!did) did = 0;
@@ -116,6 +124,7 @@ Event.observe(window, 'load', function() {
 		  else 
 			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
     } else {
+      var shape = GetShapeAtMouse();
       if(moveObjects) {
         mouse_pressed = true;
         var shape = GetShapeAtMouse();
@@ -124,9 +133,20 @@ Event.observe(window, 'load', function() {
           mouse_old_position = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
         }
       } else {
-        var shape = GetShapeAtMouse();
+        if(select_type == select_body1 || select_type == select_body2) {
+          var body = world.GetGroundBody();
+          if(shape) {
+            selected_shape = shape;
+            saveSelectedBody(shape.GetBody());
+          } else {
+            saveSelectedBody(body);
+          }
+          return;
+        } else if (select_type == select_anchor1 || select_type == select_anchor2) {
+          var point = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
+          saveSelectedPoint(point);
+        }
         if(shape) {
-          var body = shape.GetBody();
           selected_shape = shape;
           document.getElementById("frictionObject").textContent = shape.m_friction;
           document.getElementById("frictionSlider").value = shape.m_friction;

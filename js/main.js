@@ -31,11 +31,13 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
 
 document.getElementById( 'moveSelectSwitch' ).addEventListener('click', function() {
   moveObjects = !moveObjects;
+  select_type = select_any;
   if(moveObjects) {
     document.getElementById('editObjects').className = 'notSelected';
     selected_shape = false;
   } else {
     document.getElementById('editObjects').className = 'selected';
+    select_type = select_any;
   }
 });
 
@@ -178,9 +180,65 @@ function loadIllustration() {
   }
 }
 
+function selectBody1() {
+  select_type = select_body1;
+  document.getElementById("body1").className = "button-clicked";
+  selectAny();
+}
 
+function selectBody2() {
+  select_type = select_body2;
+  document.getElementById("body2").className = "button-clicked";
+  selectAny();
+}
 
+function selectAnchor1() {
+  select_type = select_anchor1;
+  document.getElementById("anchor1").className = "button-clicked";
+  selectAny();
+}
 
+function selectAnchor2() {
+  select_type = select_anchor2;
+  document.getElementById("anchor2").className = "button-clicked";
+  selectAny();
+}
+
+function selectAny() {
+  document.getElementById("moveSelectSwitch").checked = false;
+  document.getElementById('editObjects').className = 'selected';
+  selected_shape = false;
+  moveObjects = false;
+}
+
+function saveSelectedBody(body) {
+  switch(select_type) {
+    case select_body1: {
+      document.getElementById("selectedBody1").textContent = body.m_userData.id;
+      document.getElementById("body1").className = "button";
+    } break;
+    case select_body2: {
+      document.getElementById("selectedBody2").textContent = body.m_userData.id;
+      document.getElementById("body2").className = "button";
+    } break;
+  }
+  select_type = select_any;
+}
+
+function saveSelectedPoint(point) {
+  var str = "("+point.x+", "+point.y+")";
+  switch(select_type) {
+    case select_anchor1: {
+      document.getElementById("selectedAnchor1").textContent = str;
+      document.getElementById("anchor1").className = "button";
+    } break;
+    case select_anchor2: {
+      document.getElementById("selectedAnchor2").textContent = str;
+      document.getElementById("anchor2").className = "button";
+    } break;
+  }
+  select_type = select_any;
+}
 
 
 

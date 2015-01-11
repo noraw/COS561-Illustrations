@@ -115,6 +115,30 @@
       <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
     </fieldset>
 
+    <fieldset>
+      <legend>Joints</legend>
+      <select id="jointType" >
+        <option value="revolute">Revolute</option>
+        <option value="prismatic">Prismatic</option>
+        <option value="distance">Distance</option>
+        <option value="pulley">Pulley</option>
+        <option value="gear">Gear</option>
+      </select>
+      <div id="jointParts">
+        <input type="button" class="button" style="float:left;" id="body1" onClick="selectBody1();" value="Select body1"/>
+        <label id="selectedBody1" class="buttonLabelRight" >NaN</label>
+
+        <input type="button" class="button" style="float:left;" id="body2" onClick="selectBody2();" value="Select body2"/>
+        <label id="selectedBody2" class="buttonLabelRight">NaN</label>
+
+        <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click anchor1 point"/>
+        <label id="selectedAnchor1" class="buttonLabelLeft">NaN</label>
+
+        <input type="button" class="button" style="float:left;" id="anchor2" onClick="selectAnchor2();" value="Click anchor2 point"/>
+        <label id="selectedAnchor2" class="buttonLabelLeft">NaN</label>
+      </div>
+      <input type="button" class="button" style="float:right;" id="addJoint" onClick="addJoint();" value="Add"/>
+    </fieldset>
   <!-- end #sidebar1 --></div></div>
   
   <div id="middle">

@@ -74,3 +74,8 @@ function createBox(world, x, y, width, height, fixed) {
   numBodies++;
 	return body;
 }
+
+
+function createJoint() {
+
+}
