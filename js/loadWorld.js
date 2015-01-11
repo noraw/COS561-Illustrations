@@ -28,9 +28,10 @@ function loadEmitter(jsonemitter) {
   var velocity = new b2Vec2(jsonemitter.velocity.x, jsonemitter.velocity.y);
   var body = getBodyFromId(jsonemitter.body_id);
   var w = parseInt(jsonemitter.w);
+  var period = parseInt(jsonemitter.period);
   var h = parseInt(jsonemitter.h);
   var r = parseInt(jsonemitter.radius);
-  var emitter = new Emitter(body, velocity, r, w, h);
+  var emitter = new Emitter(body, velocity, r, w, h, period);
   emitters.push(emitter);
   emitterBodies[body.m_userData.id] = true;
 }

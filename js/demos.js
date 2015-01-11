@@ -173,10 +173,12 @@ Event.observe(window, 'load', function() {
         }
         if(shape) {
           selected_shape = shape;
-          document.getElementById("frictionObject").textContent = shape.m_friction;
-          document.getElementById("frictionSlider").value = shape.m_friction;
-          document.getElementById("restitutionObject").textContent = shape.m_restitution;
-          document.getElementById("restitutionSlider").value = shape.m_restitution;
+          var body = shape.GetBody();
+          if(body.m_userData.id in emitterBodies) {
+            showEmitterOptions(body);
+          } else {
+            showShapeOptions(shape);
+          }
         } else {
           selected_shape = false;
         }
@@ -203,4 +205,12 @@ Event.observe(window, 'load', function() {
 	});
 	step();
 });
+
+
+
+
+
+
+
+
 

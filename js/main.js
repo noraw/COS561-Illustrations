@@ -9,7 +9,8 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)selected(?!\S)/g , '' );
     document.getElementById("sidebar1Div").className += " notSelected";
     document.getElementById("sidebar2Div").className += " notSelected";
-    document.getElementById('editObjects').className = 'notSelected';
+    document.getElementById('editObject').className = 'notSelected';
+    document.getElementById('editEmitter').className = 'notSelected';
     document.getElementById("frictionObject").textContent = "";
     document.getElementById("frictionSlider").value = 0;
     document.getElementById("restitutionObject").textContent = "";
@@ -21,11 +22,8 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)notSelected(?!\S)/g , '' );
     document.getElementById("sidebar1Div").className += " selected";
     document.getElementById("sidebar2Div").className += " selected";
-    if(moveObjects) {
-      document.getElementById('editObjects').className = 'notSelected';
-    } else {
-      document.getElementById('editObjects').className = 'selected';
-    }
+    document.getElementById('editObject').className = 'notSelected';
+    document.getElementById('editEmitter').className = 'notSelected';
   }
 });
 
@@ -33,10 +31,8 @@ document.getElementById( 'moveSelectSwitch' ).addEventListener('click', function
   moveObjects = !moveObjects;
   select_type = select_any;
   if(moveObjects) {
-    document.getElementById('editObjects').className = 'notSelected';
     selected_shape = false;
   } else {
-    document.getElementById('editObjects').className = 'selected';
     select_type = select_any;
   }
 });
@@ -105,11 +101,12 @@ function addEmitter() {
   var r = parseInt(document.getElementById("emitterRadius").value);
   var x = parseInt(document.getElementById("emitterX").value);
   var y = parseInt(document.getElementById("emitterY").value);
+  var period = parseFloat(document.getElementById("emitterPeriodLabel").textContent);
 
   var velocity = new b2Vec2(x, y);
   var body = createBox(world, 30, 30, w, h, true);
 
-  var emitter = new Emitter(body, velocity, r, w, h);
+  var emitter = new Emitter(body, velocity, r, w, h, period);
   emitters.push(emitter);
   emitterBodies[body.m_userData.id] = true;
 }
@@ -125,7 +122,14 @@ function updateRestitution(currRestitution) {
   selected_shape.m_restitution = currRestitution;
   document.getElementById("restitutionObject").textContent = selected_shape.m_restitution;
   document.getElementById("restitutionSlider").value = selected_shape.m_restitution;
+}
 
+function updateEmitterPeriod(currPeriod) {
+  document.getElementById("emitterPeriodLabel").textContent = document.getElementById("emitterPeriodSlider").value;
+}
+
+function updateEmitterEditPeriod(currPeriod) {
+  document.getElementById("emitterEditPeriodLabel").textContent = document.getElementById("emitterEditPeriodSlider").value;
 }
 
 function changeGravity() {
@@ -170,6 +174,8 @@ function saveIllustration() {
 }
 
 function loadIllustration() {
+  document.getElementById('editObject').className = 'notSelected';
+  document.getElementById('editEmitter').className = 'notSelected';
   var oFiles = document.getElementById("loadIllustration").files,
       nFiles = oFiles.length,
       file;
@@ -325,6 +331,42 @@ function showJointOptions() {
 }
 
 
+function showShapeOptions(shape) {
+  document.getElementById('editObject').className = 'selected';
+  document.getElementById('editEmitter').className = 'notSelected';
+  document.getElementById("frictionObject").textContent = shape.m_friction;
+  document.getElementById("frictionSlider").value = shape.m_friction;
+  document.getElementById("restitutionObject").textContent = shape.m_restitution;
+  document.getElementById("restitutionSlider").value = shape.m_restitution;
+}
+
+function showEmitterOptions(body) {
+  document.getElementById('editEmitter').className = 'selected';
+  document.getElementById('editObject').className = 'notSelected';
+  var emitter = null;
+  for(var i=0; i < emitters.length; i++) {
+    if(body.m_userData.id == emitters[i].body.m_userData.id)
+      emitter = emitters[i];
+  }
+  document.getElementById("editEmitterRadius").value = emitter.radius;
+  document.getElementById("editEmitterX").value = emitter.velocity.x;
+  document.getElementById("editEmitterY").value = emitter.velocity.y;
+  document.getElementById("emitterEditPeriodLabel").textContent = emitter.period;
+  document.getElementById("emitterEditPeriodSlider").value = emitter.period;
+}
+
+function updateEmitter() {
+  var body = selected_shape.GetBody();
+  var emitter = null;
+  for(var i=0; i < emitters.length; i++) {
+    if(body.m_userData.id == emitters[i].body.m_userData.id)
+      emitter = emitters[i];
+  }
+  var radius = parseInt(document.getElementById("editEmitterRadius").value);
+  var velocity = new b2Vec2(document.getElementById("editEmitterX").value, document.getElementById("editEmitterY").value);
+  var period = parseFloat(document.getElementById("emitterEditPeriodLabel").textContent);
+  emitter.update(velocity, radius, period);
+}
 
 
 

@@ -190,6 +190,12 @@
           <input type="text" id="emitterY" class="textInput"></input>
         </div>
 
+      <div>
+        <label >Period: </label>
+        <label id="emitterPeriodLabel">1</label>
+        <input type="range" id="emitterPeriodSlider" min=".1" max="5" value="1" step=".1" onchange="updateEmitterPeriod(this.value)" />
+      </div>
+
         <input type="button" class="button" style="float:right;" id="addCircle" onClick="addEmitter();" value="Add emitter"/>
       </div>
     </fieldset>
@@ -251,7 +257,7 @@
       <label id="timeStep"></label>
       <input type="range" id="timeStepSlider" min=".1" max="3" value="1" step=".1" onchange="updateTimeStep(this.value)" />
     </div>
-    <hr/><h5>Object Editing</h5><hr />
+    <hr/><h5>Object Editing</h5><hr/>
     <div class="moveSelectSwitch">
         <input type="checkbox" name="moveSelectSwitch" class="moveSelectSwitch-checkbox" id="moveSelectSwitch" checked>
         <label class="moveSelectSwitch-label" for="moveSelectSwitch">
@@ -259,7 +265,7 @@
             <span class="moveSelectSwitch-switch"></span>
         </label>
     </div>
-    <fieldset id="editObjects" class="notSelected">
+    <fieldset id="editObject" class="notSelected">
       <legend>Edit Object</legend>
       <div>
         <label >Friction: </label>
@@ -275,18 +281,29 @@
     </fieldset>
 
     <fieldset id="editEmitter" class="notSelected">
-      <legend>Edit Objects</legend>
+      <legend>Edit Emitter</legend>
+        <div>
+          <label class="textLabel">Radius:</label>
+          <input type="text" id="editEmitterRadius" class="textInput"></input>
+        </div>
+
+        <label class="buttonLabelLeft" >Emitter Velocity:</label>
+        <div style="display:inline-block">
+          <label class="textLabel">X:</label>
+          <input type="text" id="editEmitterX" class="textInput"></input>
+        </div>
+        <div>
+          <label class="textLabel">Y:</label>
+          <input type="text" id="editEmitterY" class="textInput"></input>
+        </div>
+
       <div>
-        <label >Friction: </label>
-        <label id="frictionObject"> </label>
-        <input type="range" id="frictionSlider" min="0" max="1" value="0" step=".1" onchange="updateFriction(this.value)" />
+        <label >Period: </label>
+        <label id="emitterEditPeriodLabel"> </label>
+        <input type="range" id="emitterEditPeriodSlider" min=".1" max="5" value="1" step=".1" onchange="updateEmitterEditPeriod(this.value)" />
       </div>
-      <div>
-        <label >Elasticity: </label>
-        <label id="restitutionObject"> </label>
-        <input type="range" id="restitutionSlider" min="0" max="1" value="0" step=".1" onchange="updateRestitution(this.value)" />
-      </div>
-      <input type="button" class="button" id="deleteObject" onClick="deleteObject();" value="Delete"/>
+
+      <input type="button" class="button" id="updateEmitter" onClick="updateEmitter();" value="Update"/>
     </fieldset>
   <!-- end #sidebar2 --></div></div>
   

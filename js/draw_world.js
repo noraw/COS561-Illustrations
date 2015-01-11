@@ -7,7 +7,7 @@ function drawWorld(world, context) {
     if(b.m_userData.id in emitterBodies) {
       fillColor = '#A66500';
       strokeColor = '#04346C';
-      strokeWidth = '5px';
+      strokeWidth = '15px';
     } else if (isStatic) {
       fillColor = '#FF9C00';
       strokeColor = '#A66500';
