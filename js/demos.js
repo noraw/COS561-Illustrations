@@ -13,6 +13,7 @@ var mouse_shape = false;
 var mouse_old_position = null;
 var mouse_x, mouse_y;
 var selected_shape = false;
+var numBodies = 0;
 
 var density = 1.0;
 var restitution = 0.8;
@@ -80,20 +81,9 @@ Event.observe(window, 'load', function() {
   document.getElementById("gravityY").value = world.m_gravity.y;
   document.getElementById("timeStep").textContent = time_step_ms;
   document.getElementById("timeStepSlider").value = time_step_ms;
-  /*
-	Event.observe('canvas', 'click', function(e) {
-    console.log("click");
-		//setupNextWorld();
-    if ( !state ) return;
-		if (Math.random() < 0.5) 
-			demos.top.createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
-		else 
-			createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
-	});
-  */
+
   //If mouse is moving over the thing
   Event.observe('canvas', 'mousemove', function(e) {
-	//Event.observe('canvas', 'mousemove', function(e) {
     var p = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
      
     mouse_x = p.x;
@@ -119,7 +109,6 @@ Event.observe(window, 'load', function() {
   });
    
 	Event.observe('canvas', 'mousedown', function(e) {
-    console.log("down");
     //flag to indicate if mouse is pressed or not
     if (state) {
 		  if (Math.random() < 0.5) 
@@ -152,7 +141,6 @@ Event.observe(window, 'load', function() {
    
   //When mouse button is release, mark pressed as false and delete the mouse joint if it exists
 	Event.observe('canvas', 'mouseup', function(e) {
-    console.log("up");
     mouse_pressed = false;
     if(mouse_shape){
         mouse_shape = false;
@@ -161,7 +149,6 @@ Event.observe(window, 'load', function() {
 
   // Right click to change worlds
 	Event.observe('canvas', 'contextmenu', function(e) {
-    console.log("click");
     /*
     console.log("next");
 		if (e.preventDefault) e.preventDefault();

@@ -92,7 +92,7 @@
     <input type="checkbox" id="fixed">Create fixed object</input>
     <div class="button fileUpload">
         <span class="importText">.  Import Polygon</span>
-        <input type="file" class="import" id="loadPolygon" onClick="loadPolygon();"/>
+        <input type="file" class="import" id="loadPolygon" onChange="loadPolygon();"/>
     </div>
     <fieldset>
       <legend>Rectangle</legend>
@@ -113,28 +113,6 @@
         <input type="text" id="radius" class="textInput"></input>
       </div>
       <input type="button" class="button" style="float:right;" id="addCircle" onClick="addCircle();" value="Add"/>
-    </fieldset>
-    <hr/><h5>Object Editing</h5><hr />
-    <div class="moveSelectSwitch">
-        <input type="checkbox" name="moveSelectSwitch" class="moveSelectSwitch-checkbox" id="moveSelectSwitch" checked>
-        <label class="moveSelectSwitch-label" for="moveSelectSwitch">
-            <span class="moveSelectSwitch-inner"></span>
-            <span class="moveSelectSwitch-switch"></span>
-        </label>
-    </div>
-    <fieldset id="editObjects" class="notSelected">
-      <legend>Edit Objects</legend>
-      <div>
-        <label >Friction: </label>
-        <label id="frictionObject"> </label>
-        <input type="range" id="frictionSlider" min="0" max="1" value="0" step=".1" onchange="updateFriction(this.value)" />
-      </div>
-      <div>
-        <label >Elasticity: </label>
-        <label id="restitutionObject"> </label>
-        <input type="range" id="restitutionSlider" min="0" max="1" value="0" step=".1" onchange="updateRestitution(this.value)" />
-      </div>
-      <input type="button" class="button" id="deleteObject" onClick="deleteObject();" value="Delete"/>
     </fieldset>
 
   <!-- end #sidebar1 --></div></div>
@@ -157,8 +135,18 @@
   
   <div id="sidebar2"><div id="sidebar2Div" class="insideSidebar selected">
     <h5>Tools</h5><hr/>
-    <input type="button" class="button" name="saveButton" id="saveButton" value="Save Illustration" onClick="saveIllustration();"/>
-    <input type="button" class="button" name="loadButton" id="loadButton" value="Load Illustration" onClick="loadIllustration();"/>
+    <fieldset>
+      <legend>Save</legend>
+       <div>
+        <label >File name:</label>
+        <input type="text" id="fileName" class="textInputLong"></input>
+      </div>
+     <input type="button" class="button" name="saveButton" id="saveButton" value="Save Illustration" onClick="saveIllustration();"/>
+    </fieldset>
+    <div class="button fileUpload">
+        <span class="importText">. Load Illustration</span>
+        <input type="file" class="import" id="loadIllustration" onChange="loadIllustration();"/>
+    </div>
     <fieldset>
       <legend>Gravity</legend>
       <div>
@@ -171,11 +159,33 @@
       </div>
       <input type="button" class="button" style="float:right;" id="changeGravity" onClick="changeGravity();" value="Update"/>
     </fieldset>
+    <div>
+      <label >Timestep(ms): </label>
+      <label id="timeStep"></label>
+      <input type="range" id="timeStepSlider" min=".1" max="3" value="1" step=".1" onchange="updateTimeStep(this.value)" />
+    </div>
+    <hr/><h5>Object Editing</h5><hr />
+    <div class="moveSelectSwitch">
+        <input type="checkbox" name="moveSelectSwitch" class="moveSelectSwitch-checkbox" id="moveSelectSwitch" checked>
+        <label class="moveSelectSwitch-label" for="moveSelectSwitch">
+            <span class="moveSelectSwitch-inner"></span>
+            <span class="moveSelectSwitch-switch"></span>
+        </label>
+    </div>
+    <fieldset id="editObjects" class="notSelected">
+      <legend>Edit Objects</legend>
       <div>
-        <label >Timestep(ms): </label>
-        <label id="timeStep"></label>
-        <input type="range" id="timeStepSlider" min=".1" max="3" value="1" step=".1" onchange="updateTimeStep(this.value)" />
+        <label >Friction: </label>
+        <label id="frictionObject"> </label>
+        <input type="range" id="frictionSlider" min="0" max="1" value="0" step=".1" onchange="updateFriction(this.value)" />
       </div>
+      <div>
+        <label >Elasticity: </label>
+        <label id="restitutionObject"> </label>
+        <input type="range" id="restitutionSlider" min="0" max="1" value="0" step=".1" onchange="updateRestitution(this.value)" />
+      </div>
+      <input type="button" class="button" id="deleteObject" onClick="deleteObject();" value="Delete"/>
+    </fieldset>
   <!-- end #sidebar2 --></div></div>
   
 <!-- end #container --></div>
@@ -187,6 +197,8 @@
     <script src='js/top.js'></script>
     <script src='js/demos.js'></script>
     <script src='js/main.js'></script>
+    <script src='js/loadWorld.js'></script>
+    <script src='js/saveWorld.js'></script>
 
     <script src='style/prettify.js'></script>
 		<link href="style/prettify.css" rel="stylesheet" type="text/css" />

@@ -53,6 +53,7 @@ function deleteObject() {
 
 function loadPolygon() {
   var fixed = document.getElementById("fixed").checked;
+  var doc = document.getElementById("loadPolygon");
   var oFiles = document.getElementById("loadPolygon").files,
       nFiles = oFiles.length,
       file,
@@ -74,6 +75,7 @@ function loadPolygon() {
               pointsArray.push(JSON.parse(line));
           }
           createPoly(world, 30, 30, pointsArray, fixed);
+          document.getElementById("loadPolygon").value = "";
         }
       } else { 
         alert("Failed to load file");
@@ -118,6 +120,62 @@ function updateTimeStep(currTimeStepMilli) {
   time_step_ms = currTimeStepMilli;
   document.getElementById("timeStep").textContent = time_step_ms;
   document.getElementById("timeStepSlider").value = time_step_ms;
+}
+
+function saveIllustration() {
+  var worldJSON = worldToJSON();
+  var textToWrite = JSON.stringify(worldJSON);
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs = document.getElementById("fileName").value;
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+
+}
+
+function loadIllustration() {
+  var oFiles = document.getElementById("loadIllustration").files,
+      nFiles = oFiles.length,
+      file;
+
+  for (var nFileId = 0; nFileId < nFiles; nFileId++) {
+    file = oFiles[nFileId];
+    if (file) {
+      var r = new FileReader();
+      r.readAsText(file);
+      r.onload = function(e) { 
+        var contents = e.target.result;
+        var scene = JSON.parse(contents);
+        scene['bodyList'] = JSON.parse(scene['bodyList']);
+        scene['jointList'] = JSON.parse(scene['jointList']);
+        if ( loadWorld(scene) )
+            console.log("Scene loaded successfully.");
+        else
+            console.log("Failed to load scene");
+        document.getElementById("loadIllustration").value = "";
+      }
+    } else { 
+      alert("Failed to load file");
+    }
+  }
 }
 
 

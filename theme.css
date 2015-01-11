@@ -166,6 +166,9 @@ h5 {
 .textInput {
   width: 40px;
 }
+.textInputLong {
+  width: 110px;
+}
 
 fieldset {
   border-color: #04346C;
