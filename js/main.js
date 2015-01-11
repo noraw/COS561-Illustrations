@@ -49,6 +49,18 @@ function deleteObject() {
 	}
 }
 
+function deleteEmitter() {
+  var body = selected_shape.GetBody();
+  var emitter = null;
+  for(var i=0; i < emitters.length; i++) {
+    if(body.m_userData.id == emitters[i].body.m_userData.id) {
+      emitters.splice(i);
+      delete emitterBodies[body.m_userData.id];
+    }
+  }
+  deleteObject();
+}
+
 function loadPolygon() {
   var fixed = document.getElementById("fixed").checked;
   var doc = document.getElementById("loadPolygon");
