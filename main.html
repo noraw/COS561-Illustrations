@@ -138,7 +138,7 @@
           <input type="button" class="button" style="float:left;" id="body2" onClick="selectBody2();" value="Select body2"/>
           <label id="selectedBody2" class="buttonLabelRight" >NaN</label>
 
-          <label class="buttonLabelLeft" style="width: 60px;">Anchor1: </label>
+          <label class="buttonLabelLeft" style="width: 60px;">Anchor: </label>
           <label id="selectedAnchor1" class="buttonLabelRight" style="width: 60px;">NaN</label>
           <input type="button" class="button" style="float:left;" id="anchor1" onClick="selectAnchor1();" value="Click point"/>
           <input type="button" class="button" style="float:left;" id="anchor1" onClick="setAnchor1BodyCenter(1);" value="Set as body1 center"/>
@@ -305,6 +305,23 @@
 
       <input type="button" class="button" id="updateEmitter" style="float:right;" onClick="updateEmitter();" value="Update"/><br/><br/><hr/>
       <input type="button" class="button" id="deleteObject" onClick="deleteEmitter();" value="Delete"/>
+    </fieldset>
+
+
+    <fieldset id="editJoint" class="notSelected">
+      <legend>Edit Joint</legend>
+        <input type="checkbox" id="jointEnableMotor">Enable motor</input>
+        <div style="display: inline-block;">
+          <label class="textLabelLong">Motor speed:</label>
+          <input type="text" id="editJointSpeed" class="textInput"></input>
+        </div>
+        <div style="display: inline-block;">
+          <label class="textLabelLong" id="jointForce">Motor Force:</label>
+          <input type="text" id="editJointForce" class="textInput"></input>
+        </div>
+
+      <input type="button" class="button" id="updateJoint" style="float:right;" onClick="updateJoint();" value="Update"/><br/><br/></br><hr/>
+      <input type="button" class="button" id="deleteJoint" onClick="deleteJoint();" value="Delete"/>
     </fieldset>
   <!-- end #sidebar2 --></div></div>
   

@@ -67,6 +67,20 @@ function GetShapeAtMouse() {
     return shapes[0];
 }
 
+function GetJointAtMouse() {
+  var mouse = new b2Vec2(mouse_x, mouse_y);
+	for (var j = world.m_jointList; j; j = j.m_next) {
+    var a1 = new b2Vec2(j.m_localAnchor1.x, j.m_localAnchor1.y);
+    a1.Subtract(mouse);
+    var a2 = new b2Vec2(j.m_localAnchor2.x, j.m_localAnchor2.y);
+    a2.Subtract(mouse);
+
+    if(a1.Length() < 5 || a2.Length() < 5)
+      return j;
+  }
+  return null;
+}
+
 function UpdateJointPosition(body) {
 	for (var j = world.m_jointList; j; j = j.m_next) {
     var b1 = j.GetBody1();
@@ -137,21 +151,25 @@ Event.observe(window, 'load', function() {
   });
    
 	Event.observe('canvas', 'mousedown', function(e) {
-    //flag to indicate if mouse is pressed or not
+    //if in simulate mode
     if (state) {
 		  if (Math.random() < 0.5) 
 			  createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, false);
 		  else 
 			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
+    // if in edit mode
     } else {
       var shape = GetShapeAtMouse();
+      // if can move the selected object around
       if(moveObjects) {
         mouse_pressed = true;
         if(shape) {
           mouse_shape = shape;
           mouse_old_position = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
         }
+      // highlights the selected object
       } else {
+        // if you are picking an object for the joint body
         if(select_type == select_body1 || select_type == select_body2) {
           var body = world.GetGroundBody();
           if(shape) {
@@ -164,11 +182,19 @@ Event.observe(window, 'load', function() {
             saveSelectedBody(body);
           }
           return;
+        // if you are picking a point for the anchor for the joint
         } else if (select_type == select_anchor1 || select_type == select_anchor2) {
           var point = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
           saveSelectedPoint(point);
           return;
         }
+        // try to see if the point is actuallly near a joint and select that instead
+        selected_joint = GetJointAtMouse();
+        if(selected_joint) {
+          showJointOptions();
+          return;
+        }
+        // otherwise selecting an object for editing
         if(shape) {
           selected_shape = shape;
           var body = shape.GetBody();

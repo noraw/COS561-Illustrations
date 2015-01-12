@@ -9,12 +9,6 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)selected(?!\S)/g , '' );
     document.getElementById("sidebar1Div").className += " notSelected";
     document.getElementById("sidebar2Div").className += " notSelected";
-    document.getElementById('editObject').className = 'notSelected';
-    document.getElementById('editEmitter').className = 'notSelected';
-    document.getElementById("frictionObject").textContent = "";
-    document.getElementById("frictionSlider").value = 0;
-    document.getElementById("restitutionObject").textContent = "";
-    document.getElementById("restitutionSlider").value = 0;
   } else {
     document.getElementById("sidebar1Div").className = 
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)notSelected(?!\S)/g , '' );
@@ -22,9 +16,11 @@ document.getElementById( 'editPlaySwitch' ).addEventListener('click', function()
       document.getElementById("sidebar1Div").className.replace( /(?:^|\s)notSelected(?!\S)/g , '' );
     document.getElementById("sidebar1Div").className += " selected";
     document.getElementById("sidebar2Div").className += " selected";
-    document.getElementById('editObject').className = 'notSelected';
-    document.getElementById('editEmitter').className = 'notSelected';
   }
+  document.getElementById('editJoint').className = 'notSelected';
+  document.getElementById('editObject').className = 'notSelected';
+  document.getElementById('editEmitter').className = 'notSelected';
+
 });
 
 document.getElementById( 'moveSelectSwitch' ).addEventListener('click', function() {
@@ -43,6 +39,7 @@ function deleteObject() {
 			if(s == selected_shape) {
         world.DestroyBody(b);
         selected_shape = false;
+        document.getElementById('editObject').className = 'notSelected';
         return;
       }
 		}
@@ -56,9 +53,22 @@ function deleteEmitter() {
     if(body.m_userData.id == emitters[i].body.m_userData.id) {
       emitters.splice(i);
       delete emitterBodies[body.m_userData.id];
+      break;
     }
   }
   deleteObject();
+  document.getElementById('editEmitter').className = 'notSelected';
+}
+
+function deleteJoint() {
+	for (var j = world.m_jointList; j; j = j.m_next) {
+    if(j == selected_joint) {
+      world.DestroyJoint(j);
+      selected_joint = false;
+      document.getElementById('editJoint').className = 'notSelected';
+      return;
+    }
+  }
 }
 
 function loadPolygon() {
@@ -188,6 +198,7 @@ function saveIllustration() {
 function loadIllustration() {
   document.getElementById('editObject').className = 'notSelected';
   document.getElementById('editEmitter').className = 'notSelected';
+  document.getElementById('editJoint').className = 'notSelected';
   var oFiles = document.getElementById("loadIllustration").files,
       nFiles = oFiles.length,
       file;
@@ -341,10 +352,10 @@ function showJointOptions() {
   }
 }
 
-
 function showShapeOptions(shape) {
   document.getElementById('editObject').className = 'selected';
   document.getElementById('editEmitter').className = 'notSelected';
+  document.getElementById('editJoint').className = 'notSelected';
   document.getElementById("frictionObject").textContent = shape.m_friction;
   document.getElementById("frictionSlider").value = shape.m_friction;
   document.getElementById("restitutionObject").textContent = shape.m_restitution;
@@ -354,6 +365,7 @@ function showShapeOptions(shape) {
 function showEmitterOptions(body) {
   document.getElementById('editEmitter').className = 'selected';
   document.getElementById('editObject').className = 'notSelected';
+  document.getElementById('editJoint').className = 'notSelected';
   var emitter = null;
   for(var i=0; i < emitters.length; i++) {
     if(body.m_userData.id == emitters[i].body.m_userData.id)
@@ -364,6 +376,26 @@ function showEmitterOptions(body) {
   document.getElementById("editEmitterY").value = emitter.velocity.y;
   document.getElementById("emitterEditPeriodLabel").textContent = emitter.period;
   document.getElementById("emitterEditPeriodSlider").value = emitter.period;
+}
+
+function showJointOptions(shape) {
+  document.getElementById('editJoint').className = 'selected';
+  document.getElementById('editEmitter').className = 'notSelected';
+  document.getElementById('editObject').className = 'notSelected';
+  document.getElementById("jointEnableMotor").checked = selected_joint.m_enableMotor;
+  document.getElementById("editJointSpeed").value = selected_joint.m_motorSpeed;
+
+  switch(selected_joint.m_type) {
+    case b2Joint.e_revoluteJoint: {
+      document.getElementById("jointForce").textContent = "Motor torque:";
+      document.getElementById("editJointForce").value = selected_joint.m_maxMotorTorque;
+    } break;
+    case b2Joint.e_prismaticJoint: {
+      document.getElementById("jointForce").textContent = "Motor force:";
+      document.getElementById("editJointForce").value = selected_joint.m_maxMotorForce;
+    } break;
+  }
+
 }
 
 function updateEmitter() {
@@ -379,7 +411,19 @@ function updateEmitter() {
   emitter.update(velocity, radius, period);
 }
 
+function updateJoint() {
+  selected_joint.m_enableMotor = document.getElementById("jointEnableMotor").checked;
+  selected_joint.m_motorSpeed = parseInt(document.getElementById("editJointSpeed").value);
 
+  switch(selected_joint.m_type) {
+    case b2Joint.e_revoluteJoint: {
+      selected_joint.m_maxMotorTorque = parseInt(document.getElementById("editJointForce").value);
+    } break;
+    case b2Joint.e_prismaticJoint: {
+      selected_joint.m_maxMotorForce = parseInt(document.getElementById("editJointForce").value);
+    } break;
+  }
+}
 
 
 
