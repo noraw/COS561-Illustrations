@@ -74,12 +74,11 @@ function UpdateJointPosition(body) {
     if(b1 == body) {
       j.m_localAnchor2.x = body.m_position.x;
       j.m_localAnchor2.y = body.m_position.y;
-    } else if(b2 == body) {
-      j.m_localAnchor1.x = body.m_position.x;
-      j.m_localAnchor1.y = body.m_position.y;
-    }
+    }// else if(b2 == body) {
+//      j.m_localAnchor1.x = body.m_position.x;
+//      j.m_localAnchor1.y = body.m_position.y;
+//    }
 	}
-
 }
 
 Event.observe(window, 'load', function() {
@@ -148,7 +147,6 @@ Event.observe(window, 'load', function() {
       var shape = GetShapeAtMouse();
       if(moveObjects) {
         mouse_pressed = true;
-        var shape = GetShapeAtMouse();
         if(shape) {
           mouse_shape = shape;
           mouse_old_position = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);

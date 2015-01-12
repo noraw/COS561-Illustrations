@@ -255,7 +255,6 @@ function selectAnchor2() {
 
 function selectAny() {
   document.getElementById("moveSelectSwitch").checked = false;
-  document.getElementById('editObjects').className = 'selected';
   selected_shape = false;
   moveObjects = false;
 }
