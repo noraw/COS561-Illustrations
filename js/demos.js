@@ -155,10 +155,19 @@ Event.observe(window, 'load', function() {
 	Event.observe('canvas', 'mousedown', function(e) {
     //if in simulate mode
     if (state) {
+      var shape = GetShapeAtMouse();
+      // if can move the selected object around
+      mouse_pressed = true;
+      if(shape) {
+        mouse_shape = shape;
+        mouse_old_position = new b2Vec2(Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop);
+      }
+/*
 		  if (Math.random() < 0.5) 
 			  createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, false);
 		  else 
 			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
+*/
     // if in edit mode
     } else {
       var shape = GetShapeAtMouse();
@@ -221,8 +230,17 @@ Event.observe(window, 'load', function() {
     }
   });
 
-  // Right click to change worlds
+  // Right click to add boxes and balls to scene
 	Event.observe('canvas', 'contextmenu', function(e) {
+    //if in simulate mode
+		if (e.preventDefault) e.preventDefault();
+    if (state) {
+		  if (Math.random() < 0.5) 
+			  createBall(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, false);
+		  else 
+			  createBox(world, Event.pointerX(e) - canvasLeft, Event.pointerY(e) - canvasTop, 10, 10, false);
+    }
+		return false;
     /*
     console.log("next");
 		if (e.preventDefault) e.preventDefault();
