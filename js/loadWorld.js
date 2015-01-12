@@ -19,6 +19,8 @@ function loadWorld(worldString) {
     loadJoint(jsonjoint);
   }
 
+  var emitters = new Array();
+  var emitterBodies = {};
   for( var i = 0; i < json['emitterList'].length; i++){
     var jsonemitter = JSON.parse(json['emitterList'][i]);
     loadEmitter(jsonemitter);

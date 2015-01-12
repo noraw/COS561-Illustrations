@@ -28,6 +28,9 @@ document.getElementById( 'moveSelectSwitch' ).addEventListener('click', function
   select_type = select_any;
   if(moveObjects) {
     selected_shape = false;
+    document.getElementById('editJoint').className = 'notSelected';
+    document.getElementById('editObject').className = 'notSelected';
+    document.getElementById('editEmitter').className = 'notSelected';
   } else {
     select_type = select_any;
   }
@@ -255,12 +258,6 @@ function setAnchor1BodyCenter(bodyType) {
   document.getElementById("selectedAnchor1").textContent = str;
 }
 
-function selectAnchor2() {
-  select_type = select_anchor2;
-  document.getElementById("anchor2").className = "button-clicked";
-  selectAny();
-}
-
 function selectAny() {
   document.getElementById("moveSelectSwitch").checked = false;
   selected_shape = false;
@@ -283,16 +280,8 @@ function saveSelectedBody(body) {
 
 function saveSelectedPoint(point) {
   var str = "("+point.x+", "+point.y+")";
-  switch(select_type) {
-    case select_anchor1: {
-      document.getElementById("selectedAnchor1").textContent = str;
-      document.getElementById("anchor1").className = "button";
-    } break;
-    case select_anchor2: {
-      document.getElementById("selectedAnchor2").textContent = str;
-      document.getElementById("anchor2").className = "button";
-    } break;
-  }
+  document.getElementById("selectedAnchor1").textContent = str;
+  document.getElementById("anchor1").className = "button";
   select_type = select_any;
 }
 
@@ -334,7 +323,6 @@ function addJoint() {
   document.getElementById("selectedBody1").textContent = "NaN";
   document.getElementById("selectedBody2").textContent = "NaN";
   document.getElementById("selectedAnchor1").textContent = "NaN";
-  document.getElementById("selectedAnchor2").textContent = "Nan";
 }
 
 function showJointOptions() {

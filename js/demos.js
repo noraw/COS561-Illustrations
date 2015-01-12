@@ -194,6 +194,7 @@ Event.observe(window, 'load', function() {
         selected_joint = GetJointAtMouse();
         if(selected_joint) {
           showJointOptions();
+          selected_shape = false;
           return;
         }
         // otherwise selecting an object for editing
