@@ -1,5 +1,10 @@
 //mainly just a convenience for the testbed - uses global 'world' variable
-function loadWorld(json) {
+function loadWorld(worldString) {
+  var json = JSON.parse(worldString);
+  json['bodyList'] = JSON.parse(json['bodyList']);
+  json['jointList'] = JSON.parse(json['jointList']);
+  json['emitterList'] = JSON.parse(json['emitterList']);
+
   world = createEmptyWorld();
   world.m_allowSleep = json['m_allowSleep'];
   world.m_gravity = json['m_gravity'];
@@ -14,9 +19,8 @@ function loadWorld(json) {
     loadJoint(jsonjoint);
   }
 
-  var list = JSON.parse(json['emitterList'])
-  for( var i = 0; i < list.length; i++){
-    var jsonemitter = JSON.parse(list[i]);
+  for( var i = 0; i < json['emitterList'].length; i++){
+    var jsonemitter = JSON.parse(json['emitterList'][i]);
     loadEmitter(jsonemitter);
   }
 

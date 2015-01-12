@@ -209,6 +209,10 @@
     <div id="header">
       <h3>Dynamic Illustrations with Physical Simulations</h3>
     <!-- end #header --></div>
+    <div style="margin: 5px; margin-right: 20px;">
+      <input type="button" class="button" style="float:right; margin-left: 10px;" id="resetState" onClick="resetIllustration();" value="Reset state"/>
+      <input type="button" class="button" style="float:right;" id="rememberState" onClick="storeIllustration();" value="Remember state"/>
+    </div>
   	<div id="mainContent">
       <div class="editPlaySwitch">
           <input type="checkbox" name="editPlaySwitch" class="editPlaySwitch-checkbox" id="editPlaySwitch" checked>
@@ -217,6 +221,7 @@
               <span class="editPlaySwitch-switch"></span>
           </label>
       </div>
+
       <label class="buttonLabelLeft">(0, 0)</label>
       <label class="buttonLabelRight" style="width: 100px;">(650, 0)</label>
       <canvas id="canvas" width='650' height='400' style="top:115px; left:180px;""></canvas>

@@ -30,6 +30,8 @@ var select_type = select_any;
 var emitters = new Array();
 var emitterBodies = {};
 
+var saved_world = "";
+
 function setupWorld(did) {
 	if (!did) did = 0;
 	world = createWorld();

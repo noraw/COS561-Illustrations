@@ -210,10 +210,7 @@ function loadIllustration() {
       r.readAsText(file);
       r.onload = function(e) { 
         var contents = e.target.result;
-        var scene = JSON.parse(contents);
-        scene['bodyList'] = JSON.parse(scene['bodyList']);
-        scene['jointList'] = JSON.parse(scene['jointList']);
-        if ( loadWorld(scene) )
+        if ( loadWorld(contents) )
             console.log("Scene loaded successfully.");
         else
             console.log("Failed to load scene");
@@ -425,9 +422,17 @@ function updateJoint() {
   }
 }
 
+function storeIllustration() {
+  var worldJSON = worldToJSON();
+  saved_world = JSON.stringify(worldJSON);
+}
 
-
-
+function resetIllustration() {
+  document.getElementById('editObject').className = 'notSelected';
+  document.getElementById('editEmitter').className = 'notSelected';
+  document.getElementById('editJoint').className = 'notSelected';
+  loadWorld(saved_world);
+}
 
 
 
