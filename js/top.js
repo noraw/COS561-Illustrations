@@ -5,7 +5,7 @@ demos.top.initWorld = function(world) {
 	createBall(world, 350, 100, 50, true);
 	createPoly(world, 100, 100, [[0, 0], [10, 30], [-10, 30]], true);
 	createPoly(world, 150, 150, [[0, 0], [10, 30], [-10, 30]], true);
-*/
+
 	var ground = world.m_groundBody;
 	var body = createBox(world, 150, 100, 20, 20, false);
 	var pjd = new b2PrismaticJointDef();

@@ -2,9 +2,12 @@ function worldToJSON() {
   var json = {};
   json['m_allowSleep'] = world.m_allowSleep;
   json['m_gravity'] = world.m_gravity;
+  json['numBodies'] = numBodies;
   var bodyList = new Array();
   
 	for (var b = world.m_bodyList; b; b = b.m_next) {
+    if(!b.m_userData) continue;
+    if(b.m_userData.id == 0) continue;
     var body = saveBody(b);
     if(body)
       bodyList.push(JSON.stringify(body));

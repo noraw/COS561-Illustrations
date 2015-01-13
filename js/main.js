@@ -41,6 +41,7 @@ function deleteObject() {
 		for (var s = b.GetShapeList(); s != null; s = s.GetNext()) {
 			if(s == selected_shape) {
         world.DestroyBody(b);
+        //b.Destroy();
         selected_shape = false;
         document.getElementById('editObject').className = 'notSelected';
         return;
@@ -67,6 +68,7 @@ function deleteJoint() {
 	for (var j = world.m_jointList; j; j = j.m_next) {
     if(j == selected_joint) {
       world.DestroyJoint(j);
+      //j.Destory();
       selected_joint = false;
       document.getElementById('editJoint').className = 'notSelected';
       return;
@@ -345,6 +347,7 @@ function showShapeOptions(shape) {
   document.getElementById("frictionSlider").value = shape.m_friction;
   document.getElementById("restitutionObject").textContent = shape.m_restitution;
   document.getElementById("restitutionSlider").value = shape.m_restitution;
+  document.getElementById("bodyId").textContent = shape.GetBody().m_userData.id;
 }
 
 function showEmitterOptions(body) {
@@ -361,6 +364,7 @@ function showEmitterOptions(body) {
   document.getElementById("editEmitterY").value = emitter.velocity.y;
   document.getElementById("emitterEditPeriodLabel").textContent = emitter.period;
   document.getElementById("emitterEditPeriodSlider").value = emitter.period;
+  document.getElementById("bodyId").textContent = emitter.body.m_userData.id;
 }
 
 function showJointOptions(shape) {

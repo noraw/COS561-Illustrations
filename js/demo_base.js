@@ -1,5 +1,4 @@
 function createWorld() {
-  numBodies = 0;
 	var worldAABB = new b2AABB();
 	worldAABB.minVertex.Set(-1000, -1000);
 	worldAABB.maxVertex.Set(1000, 1000);
@@ -17,7 +16,6 @@ function createWorld() {
 
 
 function createEmptyWorld() {
-  numBodies = 0;
 	var worldAABB = new b2AABB();
 	worldAABB.minVertex.Set(-1000, -1000);
 	worldAABB.maxVertex.Set(1000, 1000);

@@ -1,5 +1,10 @@
 //mainly just a convenience for the testbed - uses global 'world' variable
 function loadWorld(worldString) {
+  if(worldString == "") return;
+  emitters = new Array();
+  emitterBodies = {};
+  numBodies = 0;
+
   var json = JSON.parse(worldString);
   json['bodyList'] = JSON.parse(json['bodyList']);
   json['jointList'] = JSON.parse(json['jointList']);
@@ -19,13 +24,12 @@ function loadWorld(worldString) {
     loadJoint(jsonjoint);
   }
 
-  var emitters = new Array();
-  var emitterBodies = {};
   for( var i = 0; i < json['emitterList'].length; i++){
     var jsonemitter = JSON.parse(json['emitterList'][i]);
     loadEmitter(jsonemitter);
   }
 
+  numBodies = json['numBodies'];
   return true;
 }
 
