@@ -327,7 +327,7 @@ function addJoint() {
   document.getElementById("selectedAnchor1").textContent = "NaN";
 }
 
-function showJointOptions() {
+function showAddJointOptions() {
   var val = document.getElementById("jointType").value;
   switch(val) {
     case "revolute": {
@@ -395,7 +395,7 @@ function updateEmitter() {
       emitter = emitters[i];
   }
   var radius = parseInt(document.getElementById("editEmitterRadius").value);
-  var velocity = new b2Vec2(document.getElementById("editEmitterX").value, document.getElementById("editEmitterY").value);
+  var velocity = new b2Vec2(parseInt(document.getElementById("editEmitterX").value), parseInt(document.getElementById("editEmitterY").value));
   var period = parseFloat(document.getElementById("emitterEditPeriodLabel").textContent);
   emitter.update(velocity, radius, period);
 }
